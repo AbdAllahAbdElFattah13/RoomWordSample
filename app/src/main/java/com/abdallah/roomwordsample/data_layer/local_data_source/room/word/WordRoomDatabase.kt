@@ -14,6 +14,8 @@ import android.arch.persistence.room.Room
  */
 @Database(entities = [Word::class], version = 1)
 abstract class WordRoomDatabase : RoomDatabase() {
+    abstract fun getWordDao(): WordDao
+
     companion object {
         @Volatile
         private var INSTANCE: WordRoomDatabase? = null
