@@ -3,11 +3,13 @@ package com.abdallah.roomwordsample.presentation_layer
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.abdallah.roomwordsample.R
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class WordsActivity : AppCompatActivity() {
 
@@ -36,5 +38,10 @@ class WordsActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setupRecyclerView() {
+        recyclerview.adapter = WordListAdapter()
+        recyclerview.layoutManager = LinearLayoutManager(this)
     }
 }
