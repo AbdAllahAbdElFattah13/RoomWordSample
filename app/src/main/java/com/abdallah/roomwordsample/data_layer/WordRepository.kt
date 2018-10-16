@@ -2,8 +2,7 @@ package com.abdallah.roomwordsample.data_layer
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
-import com.abdallah.roomwordsample.data_layer.local_data_source.room.word.WordDao
-import com.abdallah.roomwordsample.data_layer.local_data_source.room.word.WordRoomDatabase
+import com.abdallah.roomwordsample.data_layer.local_data_source.realm.WordDao
 import com.abdallah.roomwordsample.data_layer.models.Word
 import kotlin.concurrent.thread
 
@@ -15,7 +14,8 @@ import kotlin.concurrent.thread
  */
 class WordRepository(application: Application) {
 
-    private val mWordDao: WordDao = WordRoomDatabase.getInstance(application).getWordDao()
+    private val mWordDao: WordDao =
+        WordDao()
     private val mAllWordsLiveData: LiveData<List<Word>> = mWordDao.getAllWords()
 
     fun getAllWord() = mAllWordsLiveData
