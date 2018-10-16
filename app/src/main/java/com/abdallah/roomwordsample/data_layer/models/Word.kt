@@ -1,7 +1,7 @@
 package com.abdallah.roomwordsample.data_layer.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 
 /**
@@ -10,5 +10,4 @@ import android.arch.persistence.room.PrimaryKey
  * Cairo, Egypt.
  */
 
-@Entity(tableName = "word_table")
-data class Word(@PrimaryKey val word: String)
+open class Word(@PrimaryKey var word: String = "") : RealmObject()
