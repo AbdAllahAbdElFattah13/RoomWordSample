@@ -1,10 +1,12 @@
 package com.abdallah.roomwordsample.data_layer.local_data_source.room.word
 
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.abdallah.roomwordsample.data_layer.models.Word
 import android.arch.persistence.room.Room
+import kotlin.concurrent.thread
 
 
 /**
@@ -26,6 +28,18 @@ abstract class WordRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     WordRoomDatabase::class.java, "word_database"
                 )
+                    .addCallback(object : RoomDatabase.Callback() {
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            super.onOpen(db)
+                            thread {
+                                val dao = INSTANCE?.getWordDao()
+                                dao?.deleteAll()
+
+                                dao?.insert(Word("Hello"))
+                                dao?.insert(Word("World!"))
+                            }
+                        }
+                    })
                     .build().also { INSTANCE = it }
             }
     }

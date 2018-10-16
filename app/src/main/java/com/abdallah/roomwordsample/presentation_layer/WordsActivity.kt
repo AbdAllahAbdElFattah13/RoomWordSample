@@ -1,28 +1,40 @@
 package com.abdallah.roomwordsample.presentation_layer
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.abdallah.roomwordsample.R
+import com.abdallah.roomwordsample.data_layer.models.Word
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlin.properties.Delegates
 
 class WordsActivity : AppCompatActivity() {
+
+    private var mWordsViewModel: WordViewModel by Delegates.notNull()
+    private val mWordsAdapter = WordListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        setupRecyclerView()
+
+        setupTheViewModelObservation()
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -41,7 +53,17 @@ class WordsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        recyclerview.adapter = WordListAdapter()
+        recyclerview.adapter = mWordsAdapter
         recyclerview.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun setupTheViewModelObservation() {
+        mWordsViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
+        mWordsViewModel.getAllWords().observe(this,
+            Observer<List<Word>> {
+                it?.let { wordsList ->
+                    mWordsAdapter.updateWords(wordsList)
+                }
+            })
     }
 }
