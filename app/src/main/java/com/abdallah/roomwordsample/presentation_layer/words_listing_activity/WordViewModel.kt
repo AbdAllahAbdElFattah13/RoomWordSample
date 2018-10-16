@@ -1,4 +1,4 @@
-package com.abdallah.roomwordsample.presentation_layer
+package com.abdallah.roomwordsample.presentation_layer.words_listing_activity
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel

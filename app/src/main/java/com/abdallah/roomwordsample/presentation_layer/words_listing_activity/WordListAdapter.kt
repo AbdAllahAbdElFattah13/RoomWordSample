@@ -1,4 +1,4 @@
-package com.abdallah.roomwordsample.presentation_layer
+package com.abdallah.roomwordsample.presentation_layer.words_listing_activity
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.abdallah.roomwordsample.R
 import com.abdallah.roomwordsample.data_layer.models.Word
-import kotlin.properties.Delegates
 
 
 /**
@@ -30,7 +29,9 @@ class WordListAdapter : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
         val layoutInflater = LayoutInflater.from(context)
         val itemView = layoutInflater.inflate(R.layout.recyclerview_item, parent, false)
 
-        return WordViewHolder(itemView)
+        return WordViewHolder(
+            itemView
+        )
     }
 
     override fun getItemCount(): Int = mWords.size

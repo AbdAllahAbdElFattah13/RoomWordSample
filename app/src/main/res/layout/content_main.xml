@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_main"
-        tools:context=".presentation_layer.WordsActivity">
+        tools:context=".presentation_layer.words_listing_activity.WordsActivity">
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
