@@ -28,18 +28,6 @@ abstract class WordRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     WordRoomDatabase::class.java, "word_database"
                 )
-                    .addCallback(object : RoomDatabase.Callback() {
-                        override fun onOpen(db: SupportSQLiteDatabase) {
-                            super.onOpen(db)
-                            thread {
-                                val dao = INSTANCE?.getWordDao()
-                                dao?.deleteAll()
-
-                                dao?.insert(Word("Hello"))
-                                dao?.insert(Word("World!"))
-                            }
-                        }
-                    })
                     .build().also { INSTANCE = it }
             }
     }
