@@ -14,12 +14,12 @@ class RemoteDataSource {
 
     private val mRandom = Random()
 
-    fun getWordsListFromServer(onSuccess: (List<Word>) -> Unit, onError: (errorMsg: String) -> Unit) {
-        Thread.sleep(mRandom.nextInt(1000).toLong())
+    fun getWordsListFromServer(onSuccess: (List<Word>) -> Unit) {
+        Thread.sleep(mRandom.nextInt(1500).toLong())
 
         val toReturn: MutableList<Word> = ArrayList()
-        for (i in 0..5) {
-            toReturn.add(Word(mRandom.nextInt().toString()))
+        for (i in 0 until 5) {
+            toReturn.add(Word(mRandom.nextInt(20).toString()))
         }
         onSuccess(toReturn.toList())
     }

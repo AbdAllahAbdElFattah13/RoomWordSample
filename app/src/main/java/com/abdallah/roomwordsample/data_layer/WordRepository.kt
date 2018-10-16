@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.LiveData
 import com.abdallah.roomwordsample.data_layer.local_data_source.realm.WordDao
 import com.abdallah.roomwordsample.data_layer.models.Word
+import com.abdallah.roomwordsample.data_layer.remote_date_source.RemoteDataSource
 import kotlin.concurrent.thread
 
 
@@ -14,11 +15,20 @@ import kotlin.concurrent.thread
  */
 class WordRepository(application: Application) {
 
+    private val mRemoteDataSource = RemoteDataSource()
+
     private val mWordDao: WordDao =
         WordDao()
     private val mAllWordsLiveData: LiveData<List<Word>> = mWordDao.getAllWords()
 
-    fun getAllWord() = mAllWordsLiveData
+    fun getAllWord(): LiveData<List<Word>> {
+
+        mRemoteDataSource.getWordsListFromServer { wordsList ->
+            mWordDao.insertAll(wordsList)
+        }
+
+        return mAllWordsLiveData
+    }
 
     fun insert(word: Word) {
         thread { mWordDao.insert(word) }
