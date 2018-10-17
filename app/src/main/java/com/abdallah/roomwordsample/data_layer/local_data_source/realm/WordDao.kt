@@ -18,6 +18,10 @@ class WordDao {
         Realm.getDefaultInstance().executeTransactionAsync { it.insertOrUpdate(word) }
     }
 
+    fun insertAll(words: List<Word>) {
+        Realm.getDefaultInstance().executeTransactionAsync { it.insertOrUpdate(words) }
+    }
+
     fun deleteAll() {
         Realm.getDefaultInstance().executeTransactionAsync { it.delete(Word::class.java) }
     }
