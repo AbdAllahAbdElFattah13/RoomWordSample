@@ -1,8 +1,11 @@
 package com.abdallah.roomwordsample.data_layer.remote_date_source
 
+import android.os.Handler
+import android.os.Looper
 import com.abdallah.roomwordsample.data_layer.models.Word
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 
 /**
@@ -12,15 +15,22 @@ import kotlin.collections.ArrayList
  */
 class RemoteDataSource {
 
+    private val mHandler = Handler(Looper.getMainLooper())
+
     private val mRandom = Random()
 
     fun getWordsListFromServer(onSuccess: (List<Word>) -> Unit) {
-        Thread.sleep(mRandom.nextInt(1500).toLong())
+        thread {
+            Thread.sleep(mRandom.nextInt(1500).toLong())
 
-        val toReturn: MutableList<Word> = ArrayList()
-        for (i in 0 until 5) {
-            toReturn.add(Word(mRandom.nextInt(20).toString()))
+            val toReturn: MutableList<Word> = ArrayList()
+            for (i in 0 until 5) {
+                toReturn.add(Word(mRandom.nextInt(50).toString()))
+            }
+
+            mHandler.post {
+                onSuccess(toReturn.toList())
+            }
         }
-        onSuccess(toReturn.toList())
     }
 }
